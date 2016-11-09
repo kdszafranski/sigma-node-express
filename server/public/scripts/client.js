@@ -17,16 +17,22 @@ $(document).ready(function() {
       url: '/songs',
       data: newSong,
       success: function(response) {
-        console.log(response);
-        if(response == "Created") {
-          getSongs();
-        } else {
-          alert("Oh no! Your song didn't save correctly.");
-        }
+        console.log('response: ', response);
+        console.log('status: ', status);
+        getSongs();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log('xhr', jqXHR);
+        console.log('status:', textStatus);
+        console.log('err:', errorThrown);
       }
-    })
+    });
 
-  })
+  });
+
+  function handleError() {
+    alert("Bad stuff happened!");
+  }
 
   getSongs();
 
@@ -48,6 +54,7 @@ $(document).ready(function() {
       var $el = $("#songContainer").children().last();
       $el.append('<h3>' + songs[i].title + '</h3>');
       $el.append('<p>By: ' + songs[i].artist + '</p>');
+      $el.append('<p>Added On: ' + songs[i].dateAdded + '</p>');
     }
 
   }
